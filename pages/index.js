@@ -1,7 +1,8 @@
 import { ResourcePicker } from "@shopify/app-bridge-react";
-import { EmptyState, Page } from "@shopify/polaris";
+import { EmptyState } from "@shopify/polaris";
 import React, { useEffect, useState } from "react";
-import ProductList from "./components/ProductList";
+import ProductPage from "./components/ProductPage";
+import ProductEmptyState from "./components/ProductEmptyState";
 
 function index() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,6 @@ function index() {
 
   return(
     <>
-
     <ResourcePicker 
       resourceType='Product'
       open={isOpen}
@@ -35,28 +35,9 @@ function index() {
     />
 
     { products.length > 0 ? (
-    <Page
-      title='Product Selector'
-      primaryAction={{
-        content: "Select Product",
-        onAction: () => setIsOpen(true)
-      }}
-    >      
-
-      <ProductList products={products} />
-
-    </Page>
+      <ProductPage setIsOpen={setIsOpen} products={products} />
     ) : (
-      <EmptyState
-        heading="Manage the products you want to display"
-        action={{
-          content: "Select Products",
-          onAction: () => setIsOpen(true)
-        }}
-        // image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-      >
-        <p>Select the products you want to use on your banner</p>
-      </EmptyState>
+      <ProductEmptyState setIsOpen={setIsOpen} />
     )
     }
   </>
